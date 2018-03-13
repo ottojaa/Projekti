@@ -1,0 +1,38 @@
+
+.over_map{
+  position: absolute !important;
+  top: 10px;
+  left: 10px;
+  z-index: 109;
+
+}
+
+#map_canvas{
+  position:relative;
+}
+
+agm-map{
+  height:100vh;
+  z-index: 19;
+}
+mat-list{
+}
+mat-list-item{
+
+}
+mat-expansion-panel{
+  padding: 0 !important;
+}
+.mat-tab-labels{
+  justify-content: center;
+  background-color: indianred;
+  textcolor: white;
+}
+mat-tab{
+  color:white;
+}
+mat-expansion-panel-header{
+}
+mat-button{
+
+}

@@ -1,0 +1,53 @@
+
+    <div class="map" *ngIf="event.eventit">
+        <agm-map
+                [latitude]="lat"
+                [longitude]="lng"
+                [zoom] = "zoom"
+                >
+            <agm-marker
+                    *ngFor="let eventti of event.eventit | duplicates: 'name.fi'"
+                    [markerClickable]="true"
+                    [label] = "eventti.info"
+                    [latitude]="eventti.location.position.coordinates[1]"
+                    [longitude]="eventti.location.position.coordinates[0]">
+                <script>console.log(eventti.location.position.coordinates[1])</script>
+                <agm-info-window>
+                    <mat-card class="event">
+                        <mat-card-header>
+                            <div mat-card-avatar></div>
+                            <mat-card-title>{{ eventti.name.fi }}</mat-card-title>
+                            <mat-card-subtitle>{{eventti.short_description.fi}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <img mat-card-image src="{{eventti.images[0].url}}" alt="Not available">
+
+                        <mat-card-content>
+                            <div class="mat-row">
+                                <strong>{{eventti.location.street_address.fi}},</strong>
+                                <strong>{{eventti.location.postal_code}}</strong>
+                            </div>
+                                <div *ngIf="eventti.info_url !== null; else elseBlock">
+                                    <a href="{{ eventti.info_url.fi }}"target="_blank">Tapahtuman sivuille</a>
+                                </div>
+                                    <ng-template #elseBlock>
+                                        <a href="{{ eventti.location.info_url.fi }}"target="_blank">Tapahtuman järjestäjän sivuille</a>
+                                    </ng-template>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>Save</button>
+                            <button mat-button>Back</button>
+                        </mat-card-actions>
+                    </mat-card>
+
+                </agm-info-window>
+            </agm-marker>
+            <agm-circle [latitude]="lat" [longitude]="lng"
+                        [radius]="150"
+                        [fillColor]="'red'"
+                        [circleDraggable]="false"
+                        [editable]="false"
+            >
+            </agm-circle>
+        </agm-map>
+    </div>

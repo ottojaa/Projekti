@@ -1,0 +1,60 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="getLocation.js"></script>
+<mat-tab-group>
+    <mat-tab label="Main page">
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div class="over_map">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title style="justify-content: center">
+                                    Nearby Events
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-list style="overflow-y: auto;">
+                                <mat-list-item (click)="moveToMarker($event)"*ngFor="let eventti of event.eventit  | duplicates: 'name.fi'">
+                                    <img *ngIf="eventti.images" matListAvatar [src]="eventti.images[0].url">
+                                    <h3 matLine> {{ eventti.name.fi }}</h3>
+                                    <p matLine> <span> {{eventti.short_description.fi}}</span></p>
+                                    <mat-divider></mat-divider>
+                                </mat-list-item>
+                            </mat-list>
+                        </mat-expansion-panel>
+                    </div>
+                    <div class="over_map" fxFlexOffset.gt-lg="65">
+                        <mat-card>
+                        <mat-form-field fxFlexFill>
+                            <input matInput placeholder="Search events by using keywords such as name, address or description" [(ngModel)]="event.keyWord">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker1" placeholder="Event start date" type="date" [(ngModel)]="event.startDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker2" placeholder="Event end date" type="date" [(ngModel)]="event.endDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                            <button (click)="searchForm()" mat-button style="margin-left: 40px !important;">Search</button>
+                        </mat-card>
+
+                    </div>
+            </div>
+
+        <app-map></app-map>
+    </mat-tab>
+    <mat-tab label="Saved events" >
+        <div class="container">
+            <mat-list>
+                <mat-list-item *ngFor="let eventti of event.eventit | duplicates: 'name.fi'">
+                   <img *ngIf="eventti.images" matListAvatar [src]="eventti.images[0].url">
+                    <h3 matLine> {{eventti.name.fi}}</h3>
+                    <p matLine> <span> {{eventti.short_description.fi}}</span></p>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </mat-tab>
+

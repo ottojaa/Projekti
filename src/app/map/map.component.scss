@@ -1,0 +1,42 @@
+
+agm-map{
+  height: 100vh;        /* Viewport-relative units */
+  width: 100vw;
+  border:0;
+  position:relative;
+  margin-top: 0px ;
+}
+.event {
+  max-width: 700px;
+  justify-content: center;
+}
+mat-card img{
+  object-fit: cover;
+}
+mat-card-content{
+  text-align: center;
+}
+button{
+  justify-content: center;
+  margin: auto;
+}
+mat-card-title{
+  text-align: center;
+}
+mat-card-subtitle{
+  text-align: center;
+}
+mat-card-actions{
+  text-align: center;
+}
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+agm-info-window{
+  justify-content:center;
+  z-index:9000;
+}
+a:link {
+  text-decoration: none;
+}

@@ -1,23 +1,38 @@
-
+.max{
+  max-width: 95%;
+}
+.center{
+  text-align: center;
+}
 .over_map{
   position: absolute !important;
   top: 10px;
   left: 10px;
   z-index: 109;
+  max-width:25%;
 
 }
-
+.margin{
+  margin-top: 20%;
+  margin-bottom: 20%;
+  background-color: gainsboro;
+  opacity: 0.5;
+}
 #map_canvas{
   position:relative;
 }
-
+p.center{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 agm-map{
   height:100vh;
   z-index: 19;
 }
 mat-list{
 }
-mat-list-item{
+mat-list-item-content{
+  text-align: center;
 
 }
 mat-expansion-panel{
@@ -30,9 +45,29 @@ mat-expansion-panel{
 }
 mat-tab{
   color:white;
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+#liikuPliis{
+  text-align: center;
+  justify-content: center;
 }
 mat-expansion-panel-header{
 }
-mat-button{
-
+center mat-list-item{
+  text-align: center;
+}
+a.mat-list-item-content{
+  text-align: center;
+}
+a.mat-list-item{
+  text-align: center;
+}
+.test{
+  vertical-align: middle;
+  text-align:center;
+}
+a:link {
+  text-decoration: none;
 }

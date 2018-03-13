@@ -1,57 +1,110 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
 <script src="getLocation.js"></script>
 <mat-tab-group>
     <mat-tab label="Main page">
 
-            <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
 
-                    <div class="over_map">
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title style="justify-content: center">
-                                    Nearby Events
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <mat-list style="overflow-y: auto;">
-                                <mat-list-item (click)="moveToMarker($event)"*ngFor="let eventti of event.eventit  | duplicates: 'name.fi'">
-                                    <img matListAvatar src="{{eventti.images[0].url}}">
-                                    <h3 matLine> {{ eventti.name.fi }}</h3>
-                                    <p matLine> <span> {{eventti.short_description.fi}}</span></p>
-                                    <mat-divider></mat-divider>
-                                </mat-list-item>
-                            </mat-list>
-                        </mat-expansion-panel>
-                    </div>
-                    <div class="over_map" fxFlexOffset.gt-lg="65">
-                        <mat-card>
-                        <mat-form-field fxFlexFill>
-                            <input matInput placeholder="Search events by using keywords such as name, address or description" value="">
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput [matDatepicker]="picker1" placeholder="Event start date" [formControl]="serializedDate">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input matInput [matDatepicker]="picker2" placeholder="Event end date" [formControl]="serializedDate">
-                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                            <mat-datepicker #picker2></mat-datepicker>
-                        </mat-form-field>
-                            <button mat-button style="margin-left: 40px !important;">Search</button>
-                        </mat-card>
+            <div class="over_map">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title style="justify-content: center">
+                            Nearby Events
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="max">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let eventti of event.eventit  | duplicates: 'name.fi'">
+                                <mat-expansion-panel-header class="center">
+                                    <h4>{{eventti.name.fi}}</h4>
+                                </mat-expansion-panel-header>
+                                <mat-list>
 
+                                    <mat-list-item>
+                                        <div class="content"
+                                        fxLayout="row"
+                                        fxLayout.xs="column"
+                                             fxFlex
+                                             fxFlexFill>
+
+                                            <div fxFlex="30" class="test" fxFlex.xs="25">
+                                                <img style="max-height: 100% " matListAvatar
+                                                     src="{{eventti.images[0].url}}">
+                                            </div>
+                                            <div fxFlex="15" class="test" >
+                                                <span class="mat-body-1"> Päivämäärä: </span>
+                                            </div>
+                                            <div fxFlex="55" class="test" >
+                                            <span class="mat-body-1" style="color: limegreen"> {{eventti.start_time | date: 'MMM d, y'}}</span>
+                                            </div>
+                                        </div>
+                                    </mat-list-item>
+                                    <mat-list-item><p>{{eventti.short_description.fi}}</p></mat-list-item>
+                                    <mat-list-item>
+                                        <div class="content"
+                                        fxLayout="column"
+                                        fxLayout.xs="row"
+                                        fxFlexFill>
+                                            <div *ngIf="eventti.info_url !== null; else elseBlock">
+                                                <a href="{{ eventti.info_url.fi }}" target="_blank">Tapahtuman sivuille</a>
+                                            </div>
+                                        <!--Jos tapahtumalla ei ole tapahtumalinkkiä, linkki siirtää järjestäjän sivuille -->
+                                            <ng-template #elseBlock class="center">
+                                                <a href="{{ eventti.location.info_url.fi }}" target="_blank">Tapahtuman järjestäjän
+                                                    sivuille</a>
+                                            </ng-template>
+                                        </div>
+                                    </mat-list-item>
+                                    <mat-divider class="margin"></mat-divider>
+                                    <p class="center">Tapahtuman osoite: {{eventti.location.street_address.fi}}</p>
+                                    <mat-action-row>
+                                        <button mat-button class="center">Save event</button>
+                                    </mat-action-row>
+                                </mat-list>
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
                     </div>
+                </mat-expansion-panel>
             </div>
+            <div class="over_map" fxFlexOffset.gt-lg="70">
+                <mat-card>
+                    <mat-form-field fxFlexFill>
+                        <input matInput
+                               placeholder="Search events by using keywords such as name, address or description"
+                               [(ngModel)]="event.query">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" placeholder="Event start date" type="text"
+                               [ngModel]="event.startDate | date: 'yyyy-MM-dd'"
+                               (ngModelChange)="event.startDate = $event" [formControl]="serializedDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker2" placeholder="Event end date" type="text"
+                               [ngModel]="event.endDate | date: 'yyyy-MM-dd'" (ngModelChange)="event.endDate = $event"
+                               [formControl]="serializedDate2">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                    <button (click)="searchForm()" mat-button style="margin-left: 40px !important;">Search</button>
+                </mat-card>
+
+            </div>
+        </div>
 
         <app-map></app-map>
     </mat-tab>
-    <mat-tab label="Saved events" >
+    <mat-tab label="Saved events">
         <div class="container">
             <mat-list>
                 <mat-list-item *ngFor="let eventti of event.eventit | duplicates: 'name.fi'">
-                   <img matListAvatar src="{{eventti.images[0].url}}">
+                    <img matListAvatar src="{{eventti.images[0].url}}">
                     <h3 matLine> {{eventti.name.fi}}</h3>
-                    <p matLine> <span> {{eventti.short_description.fi}}</span></p>
+                    <p matLine><span> {{eventti.short_description.fi}}</span></p>
                     <mat-divider></mat-divider>
                 </mat-list-item>
             </mat-list>

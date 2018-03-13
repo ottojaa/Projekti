@@ -24,6 +24,7 @@ export class MapComponent implements OnInit {
             this.event.getEvents().subscribe( event => {
                 console.log(event);
                 this.event.eventit = event['data'];
+                this.event.ladattu = true;
             });
         });
     }

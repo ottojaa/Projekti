@@ -11,38 +11,38 @@ import 'rxjs/add/operator/map';
 export class EventService {
     constructor(private http: HttpClient) {
     }
+
     private currentDate = new Date();
     apiUrl = 'https://api.hel.fi/linkedevents/v1/event/?include=location&start=today&bbox=';
+    apiUrlSearch = 'https://api.hel.fi/linkedevents/v1/event/?include=location&bbox=';
     lng: number;
     lat: number;
     paikkaHaettu = false;
     x = '';
     eventit = new Array();
-    getCurrentDate(): string {
-        let day: any = this.currentDate.getDate();
-        let month: any = this.currentDate.getMonth() + 1;
-        let year: any = this.currentDate.getFullYear();
-        let dateInApiFormat: string;
-
-        if ( day < 10 ) {
-            day = '0' + day.toString();
-        }
-        if (month < 10) {
-            month = '0' + month.toString();
-        }
-        dateInApiFormat = day + '-' + month + '-' + year.toString();
-        console.log(dateInApiFormat);
-        this.currentDate.setDate( this.currentDate.getDate() + 7 );
-        return dateInApiFormat;
-    }
-    setToMarker() {
-
-    }
+    searchForm = false;
+    ladattu = false;
+    public query: any;
+    public startDate: string;
+    public endDate: string;
+    public conditionalText = '&text='
 
     getEvents() {
-        return this.http.get<EventData>(this.apiUrl + (this.lng - 0.035) + ','
-            + (this.lat - 0.035) + ',' + (this.lng + 0.035) + ',' + (this.lat + 0.035));
+        if (!this.searchForm) {
+            return this.http.get<EventData>(this.apiUrl + (this.lng - 0.035).toFixed(3) + ','
+                + (this.lat - 0.035).toFixed(3) + ',' + (this.lng + 0.035).toFixed(3) + ',' + (this.lat + 0.035).toFixed(3));
+        } else {
+            //tekstihakukenttä tyhjä --> älä lisää queryyn
+            if (this.query == null) {
+                this.conditionalText = '';
+                this.query = '';
+            }
+            return this.http.get<EventData>(this.apiUrlSearch + (this.lng - 0.035).toFixed(3) + ','
+                + (this.lat - 0.035).toFixed(3) + ',' + (this.lng + 0.035).toFixed(3) + ',' + (this.lat + 0.035).toFixed(3)
+                + this.conditionalText + this.query + '&start=' + this.startDate + '&end=' + this.endDate);
+        }
     }
+
     getPosition(): Observable<boolean> {
         return new Observable<boolean>(observer => {
             if (navigator) {
@@ -62,7 +62,7 @@ export class EventService {
     }
 
     /*const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
-    return this.http.get<EventData>(this.apiUrl, body, headers); */
+     return this.http.get<EventData>(this.apiUrl, body, headers); */
 }
 
 

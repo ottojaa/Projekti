@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import { DuplicatesPipe } from './pipes/duplicates.pipe';
+import { DatePipe } from '@angular/common';
 
 
 

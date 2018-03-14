@@ -4,14 +4,25 @@
 .center{
   text-align: center;
 }
+.content{
+  position:absolute !important;
+}
 .over_map{
   position: absolute !important;
   top: 10px;
   left: 10px;
   z-index: 109;
   max-width:25%;
+}
+.over_map2{
+  position: absolute !important;
+  right:10px;
+  top:10px;
+  z-index:109
+
 
 }
+
 .margin{
   margin-top: 20%;
   margin-bottom: 20%;

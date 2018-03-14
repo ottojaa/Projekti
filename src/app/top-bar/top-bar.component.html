@@ -5,9 +5,15 @@
 <mat-tab-group>
     <mat-tab label="Main page">
 
-        <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="content"
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxFlexFill
+             fxLayoutAlign="space-between center"
+        >
 
-            <div class="over_map">
+
+            <div class="over_map" fxFlex="25">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title style="justify-content: center">
@@ -69,9 +75,9 @@
                     </div>
                 </mat-expansion-panel>
             </div>
-            <div class="over_map" fxFlexOffset.gt-lg="70">
+            <div class="over_map2" fxFlex="30" fxFlexAlign.md="end">
                 <mat-card>
-                    <mat-form-field fxFlexFill>
+                    <mat-form-field>
                         <input matInput
                                placeholder="Search events by using keywords such as name, address or description"
                                [(ngModel)]="event.query">

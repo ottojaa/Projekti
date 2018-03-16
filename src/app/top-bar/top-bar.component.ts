@@ -31,4 +31,7 @@ export class TopBarComponent {
             });
         });
     }
+    refresh(): void {
+        window.location.reload();
+    }
 }

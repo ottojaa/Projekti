@@ -1,8 +1,16 @@
 .max{
   max-width: 95%;
 }
+mat-tab-group{
+  position: fixed !important;
+  width:100%;
+}
 .center{
   text-align: center;
+}
+mat-raised-button{
+  line-height:50%;
+  height: 50%;
 }
 .content{
   position:absolute !important;
@@ -18,7 +26,8 @@
   position: absolute !important;
   right:10px;
   top:10px;
-  z-index:109
+  z-index:109;
+  width:30%;
 
 
 }
@@ -40,19 +49,17 @@ agm-map{
   height:100vh;
   z-index: 19;
 }
-mat-list{
-}
-mat-list-item-content{
-  text-align: center;
-
-}
 mat-expansion-panel{
   padding: 0 !important;
 }
 .mat-tab-labels{
-  justify-content: center;
+  justify-content: space-around;
   background-color: indianred;
-  textcolor: white;
+  color: white !important;
+  border-top: 1px solid black;
+}
+.mat-tab-label-content{
+  color:white;
 }
 mat-tab{
   color:white;
@@ -64,15 +71,7 @@ mat-tab{
   text-align: center;
   justify-content: center;
 }
-mat-expansion-panel-header{
-}
-center mat-list-item{
-  text-align: center;
-}
 a.mat-list-item-content{
-  text-align: center;
-}
-a.mat-list-item{
   text-align: center;
 }
 .test{
@@ -81,4 +80,18 @@ a.mat-list-item{
 }
 a:link {
   text-decoration: none;
+}
+#ellipsis{
+  height:100% !important;
+  width:100% !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+mat-list-item{
+  padding-top:10px;
+  padding-bottom:10px;
+
 }

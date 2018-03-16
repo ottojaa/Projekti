@@ -13,8 +13,8 @@ export class EventService {
     }
 
     private currentDate = new Date();
-    apiUrl = 'https://api.hel.fi/linkedevents/v1/event/?include=location&start=today&bbox=';
-    apiUrlSearch = 'https://api.hel.fi/linkedevents/v1/event/?include=location&bbox=';
+    apiUrl = 'https://api.hel.fi/linkedevents/v1/event/?include=location,keywords&start=today&bbox=';
+    apiUrlSearch = 'https://api.hel.fi/linkedevents/v1/event/?include=location,keywords';
     lng: number;
     lat: number;
     paikkaHaettu = false;
@@ -25,21 +25,27 @@ export class EventService {
     public query: any;
     public startDate: string;
     public endDate: string;
-    public conditionalText = '&text='
+    public conditionalText = '&text=';
+    public startText = '&start=';
+    public endText = '&end=';
 
     getEvents() {
         if (!this.searchForm) {
             return this.http.get<EventData>(this.apiUrl + (this.lng - 0.035).toFixed(3) + ','
-                + (this.lat - 0.035).toFixed(3) + ',' + (this.lng + 0.035).toFixed(3) + ',' + (this.lat + 0.035).toFixed(3));
+                + (this.lat - 0.095).toFixed(3) + ',' + (this.lng + 0.035).toFixed(3) + ',' + (this.lat + 0.035).toFixed(3));
         } else {
-            //tekstihakukenttä tyhjä --> älä lisää queryyn
             if (this.query == null) {
                 this.conditionalText = '';
                 this.query = '';
+            }if (this.startDate == null) {
+                this.startText = '';
+                this.startDate = '';
+            }if (this.endDate == null) {
+                this.endDate = '';
+                this.endText = '';
             }
-            return this.http.get<EventData>(this.apiUrlSearch + (this.lng - 0.035).toFixed(3) + ','
-                + (this.lat - 0.035).toFixed(3) + ',' + (this.lng + 0.035).toFixed(3) + ',' + (this.lat + 0.035).toFixed(3)
-                + this.conditionalText + this.query + '&start=' + this.startDate + '&end=' + this.endDate);
+            return this.http.get<EventData>(this.apiUrlSearch + this.conditionalText +
+                this.query + this.startText + this.startDate + this.endText + this.endDate);
         }
     }
 

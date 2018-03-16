@@ -1,3 +1,11 @@
+<div *ngIf="!event.ladattu">
+    <mat-spinner
+            class="margin"
+            [color]="primary"
+            [mode]="indeterminate">
+    </mat-spinner>
+</div>
+
 <div class="map" *ngIf="event.ladattu">
     <agm-map
             [latitude]="lat"
@@ -5,7 +13,7 @@
             [zoom]="zoom"
     >
         <agm-marker
-                *ngFor="let eventti of event.eventit | duplicates: 'location.id'"
+                *ngFor="let eventti of event.eventit | duplicates: 'name.fi'"
                 [markerClickable]="true"
                 [label]="eventti.info"
                 [latitude]="eventti.location.position.coordinates[1]"
@@ -30,8 +38,10 @@
                         </div>
                         <!--Jos tapahtumalla ei ole tapahtumalinkkiä, linkki siirtää järjestäjän sivuille -->
                         <ng-template #elseBlock>
+                            <div *ngIf="eventti.location.info_url.fi">
                             <a href="{{ eventti.location.info_url.fi }}" target="_blank">Tapahtuman järjestäjän
                                 sivuille</a>
+                            </div>
                         </ng-template>
                     </mat-card-content>
                     <mat-card-actions>
